@@ -15,7 +15,7 @@ let storedNumbers=[];
 let newNumbers=[];
 
 async function scrapping(){
-   const browser = await puppeteer.launch();
+   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
    const page = await browser.newPage();
    try{
       
@@ -44,10 +44,13 @@ async function scrapping(){
             localStorage.setItem("nums", JSON.stringify(storedNumbers));   
            }else{
             newNumbers=nums;
+            storedNumbers=nums;
+            localStorage.setItem("nums", JSON.stringify(storedNumbers));   
+
    
            }
       }
-          await numbersFilter()
+           await numbersFilter()
            await browser.close()
    
            
@@ -69,7 +72,7 @@ async function sendNotifications () {
          if (i % 4 == 0) notBody += "\n";
       }
       var message = {
-         // to: 'cdi2pFxpRJK1IHLS1z88hP:APA91bHLhqoMmpIFG8D6TJN-5kRlj1iXYRtGw3zS8Wp0FyVXWTWy8bYXk8D4M_VPMIG8UphZdP4PO7T8GRhVdiVwiq1cE7yyp4v16OziJA3YBZX2xey8FjruJf3MMHcnX-JhlCuaLrRR',         
+         to: 'cdi2pFxpRJK1IHLS1z88hP:APA91bHLhqoMmpIFG8D6TJN-5kRlj1iXYRtGw3zS8Wp0FyVXWTWy8bYXk8D4M_VPMIG8UphZdP4PO7T8GRhVdiVwiq1cE7yyp4v16OziJA3YBZX2xey8FjruJf3MMHcnX-JhlCuaLrRR',         
          to: 'eP5FhlLbQ_Sg4pe7U_9-DW:APA91bGhyhx5W2cXub2CoYYPpLMPGt7tgJ1QBUPkRVGkkGL5f17DnONIMp03Md5RBjdGNE-JRpNwiEdJjheIclkyzNtQKuKEXXdvuJEkOm0p4a6eKog4d0nU2Z2ZqpZrPjTqqsNvO7Td',
          collapse_key: 'your_collapse_key',
          notification: {
