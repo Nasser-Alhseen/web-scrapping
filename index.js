@@ -15,20 +15,26 @@ let storedNumbers=[];
 let newNumbers=[];
 
 async function scrapping(){
-   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-   const page = await browser.newPage();
+   var browser;
+   var page ;
+   
    try{
-      
-          await page.goto('https://www.touch.com.lb/autoforms/portal/touch/onlinereservation', { waitUntil: 'networkidle2', timeout: 17000 });
+      browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+      page = await browser.newPage();
+          await page.goto('https://www.touch.com.lb/autoforms/portal/touch/onlinereservation', { waitUntil: 'networkidle2', timeout: 0 });
+
    
-         await page.click("#numbers > input[type=button]:nth-child(10)"),
-         page.setViewport({
-            width: 1000,
-            height: 10000,
-            deviceScaleFactor: 1
-          });
+         await Promise.all([
+            page.waitForNavigation(),
+            page.click("#numbers > input[type=button]:nth-child(10)"),
+            page.setViewport({
+               width: 1000,
+               height: 10000,
+               deviceScaleFactor: 1
+             })
+           
+          ]);
    
-            await page.waitForNavigation();
            var nums = await page.evaluate(() => { return Array.from(document.querySelectorAll("#available-Numbers > div > select > option")).map(x => x.text)});
       async function numbersFilter(){
          if (localStorage.getItem("nums") != null) {
@@ -58,6 +64,7 @@ async function scrapping(){
       await browser.close()
 
 
+
    }
    
    
@@ -72,7 +79,7 @@ async function sendNotifications () {
          if (i % 4 == 0) notBody += "\n";
       }
       var message = {
-         to: 'cdi2pFxpRJK1IHLS1z88hP:APA91bHLhqoMmpIFG8D6TJN-5kRlj1iXYRtGw3zS8Wp0FyVXWTWy8bYXk8D4M_VPMIG8UphZdP4PO7T8GRhVdiVwiq1cE7yyp4v16OziJA3YBZX2xey8FjruJf3MMHcnX-JhlCuaLrRR',         
+         // to: 'cdi2pFxpRJK1IHLS1z88hP:APA91bHLhqoMmpIFG8D6TJN-5kRlj1iXYRtGw3zS8Wp0FyVXWTWy8bYXk8D4M_VPMIG8UphZdP4PO7T8GRhVdiVwiq1cE7yyp4v16OziJA3YBZX2xey8FjruJf3MMHcnX-JhlCuaLrRR',         
          to: 'eP5FhlLbQ_Sg4pe7U_9-DW:APA91bGhyhx5W2cXub2CoYYPpLMPGt7tgJ1QBUPkRVGkkGL5f17DnONIMp03Md5RBjdGNE-JRpNwiEdJjheIclkyzNtQKuKEXXdvuJEkOm0p4a6eKog4d0nU2Z2ZqpZrPjTqqsNvO7Td',
          collapse_key: 'your_collapse_key',
          notification: {
