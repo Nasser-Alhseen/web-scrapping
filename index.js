@@ -2,14 +2,18 @@ const puppeteer=require("puppeteer");
 const FCM = require('fcm-node')
 const serverKey = "AAAAEW_q8QU:APA91bHH6ba2lZ-Ihw5kKw778yxH0z0Rh3vp9A5zb2iJoYTlong2Id4GuMmtwtPs_hwgczmSnZXg1iSff8sxRErwYaIHGjgEHhq0LR1XB3eSrS6_EzyyCyCMJBLrPGy7yLK11OxkRfz3"
 const fcm = new FCM(serverKey)
-
+const TelegramBot = require('node-telegram-bot-api');
+const token = '5841123683:AAExQwcl5gueOmzH5G5JeyE6mg9j3xfYWgA';
 if (typeof localStorage === "undefined" || localStorage === null) {
    var LocalStorage = require('node-localstorage').LocalStorage;
    localStorage = new LocalStorage('./scratch');
 }
 
+const ratebChatID=1805120604;
+const myChatID=1462861733;
 
 
+const bot = new TelegramBot(token, {polling: true});
 
 let storedNumbers=[];
 let newNumbers=[];
@@ -78,26 +82,8 @@ async function sendNotifications () {
          notBody += newNumbers[i] + " ";
          if (i % 4 == 0) notBody += "\n";
       }
-      var message = {
-         // to: 'cdi2pFxpRJK1IHLS1z88hP:APA91bHLhqoMmpIFG8D6TJN-5kRlj1iXYRtGw3zS8Wp0FyVXWTWy8bYXk8D4M_VPMIG8UphZdP4PO7T8GRhVdiVwiq1cE7yyp4v16OziJA3YBZX2xey8FjruJf3MMHcnX-JhlCuaLrRR',         
-         to: 'eP5FhlLbQ_Sg4pe7U_9-DW:APA91bGhyhx5W2cXub2CoYYPpLMPGt7tgJ1QBUPkRVGkkGL5f17DnONIMp03Md5RBjdGNE-JRpNwiEdJjheIclkyzNtQKuKEXXdvuJEkOm0p4a6eKog4d0nU2Z2ZqpZrPjTqqsNvO7Td',
-         collapse_key: 'your_collapse_key',
-         notification: {
-            title: "Touch",
-            body: notBody
-         },
-         data: {
-            my_key: 'my value',
-            my_another_key: 'my another value'
-         }
-      }
-      fcm.send(message, (err, response) => {
-         if (err) {
-            console.log("Something has gone wrong!")
-         } else {
-            console.log("Successfully sent with response: ", response)
-         }
-      })
+      bot.sendMessage(ratebChatID, notBody);
+
 
 
    }
@@ -108,26 +94,9 @@ async function sendNotifications () {
 
 
          if (c == 40) {
-            var message = {
-               // to: 'cdi2pFxpRJK1IHLS1z88hP:APA91bHLhqoMmpIFG8D6TJN-5kRlj1iXYRtGw3zS8Wp0FyVXWTWy8bYXk8D4M_VPMIG8UphZdP4PO7T8GRhVdiVwiq1cE7yyp4v16OziJA3YBZX2xey8FjruJf3MMHcnX-JhlCuaLrRR',         
-               to: 'eP5FhlLbQ_Sg4pe7U_9-DW:APA91bGhyhx5W2cXub2CoYYPpLMPGt7tgJ1QBUPkRVGkkGL5f17DnONIMp03Md5RBjdGNE-JRpNwiEdJjheIclkyzNtQKuKEXXdvuJEkOm0p4a6eKog4d0nU2Z2ZqpZrPjTqqsNvO7Td',
-               collapse_key: 'your_collapse_key',
-               notification: {
-                  title: "Touch",
-                  body: notBody
-               },
-               data: {
-                  my_key: 'my value',
-                  my_another_key: 'my another value'
-               }
-            }
-            fcm.send(message, (err, response) => {
-               if (err) {
-                  console.log("Something has gone wrong!")
-               } else {
-                  console.log("Successfully sent with response: ", response)
-               }
-            })
+            bot.sendMessage(ratebChatID, notBody);
+
+           
             c = 0;
             notBody = "";
 
