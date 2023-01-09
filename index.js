@@ -3,7 +3,7 @@ const FCM = require('fcm-node')
 const serverKey = "AAAAEW_q8QU:APA91bHH6ba2lZ-Ihw5kKw778yxH0z0Rh3vp9A5zb2iJoYTlong2Id4GuMmtwtPs_hwgczmSnZXg1iSff8sxRErwYaIHGjgEHhq0LR1XB3eSrS6_EzyyCyCMJBLrPGy7yLK11OxkRfz3"
 const fcm = new FCM(serverKey)
 const TelegramBot = require('node-telegram-bot-api');
-const token = '5841123683:AAExQwcl5gueOmzH5G5JeyE6mg9j3xfYWgA';
+const token = '5624475100:AAE91g1kCVxx--5_5QbJTo9FLyP3gDwcbTs';
 if (typeof localStorage === "undefined" || localStorage === null) {
    var LocalStorage = require('node-localstorage').LocalStorage;
    localStorage = new LocalStorage('./scratch');
