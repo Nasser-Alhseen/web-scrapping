@@ -14,6 +14,15 @@ const myChatID=1462861733;
 
 
 const bot = new TelegramBot(token, {polling: true});
+bot.onText(/\/echo (.+)/, (msg, match) => {
+  
+ 
+   const chatId = msg.chat.id;
+   console.log(chatId);
+ 
+   // send back the matched "whatever" to the chat
+   bot.sendMessage(chatId, resp);
+ });
 
 let storedNumbers=[];
 let newNumbers=[];
